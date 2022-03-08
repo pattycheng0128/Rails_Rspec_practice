@@ -1,0 +1,16 @@
+<%= form_for(course) do |f| %>
+  <fieldset>
+    <legend class="text-center"><%= task_title %></legend>
+    <div class="mb-3">
+      <%= f.label :title , "名稱", class:"form-label" %>
+      <%= f.text_field :title, class:"form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :description, "內容", class:"form-label" %>
+      <%= f.text_area :description, class:"form-control"%>
+    </div>
+    <div>
+      <%= f.submit btn_task %>
+    </div>
+  </fieldset>
+<% end %>

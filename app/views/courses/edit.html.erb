@@ -1,9 +1,3 @@
-<div class="col-md-12">
-  <%= form_for @course do |f| %>
-    <%= f.text_field :title %>
-    <%= f.text_area :description %>
-    <div class="form-actions">
-       <%= f.submit "Submit", :disable_with => 'Submiting...', :class => "btn btn-primary"%>
-    </div>
-  <% end %>
+<div class="container mt-3">
+  <%= render 'form', course: @course, task_title: "編輯清單", btn_task: "編輯" %>
 </div>

@@ -44,21 +44,34 @@ RSpec.describe CoursesController do
 
   # new
   describe "GET new" do
-    it "assign @course" do
-      course = build(:course)
+    context "when user login" do
+      # 在 context 下的 it 都可以使用 let(將重複的code整理到這)
+      let(:user) {create(:user)}
+      let(:course) {build(:course)} #產生一個未儲存的 course 對象
 
-      get :new
+      # 整理重複的code
+      before do
+        sign_in user
+        get :new
+      end
 
-      expect(assigns(:course)).to be_a_new(Course)
+      it "assign @course" do
+        expect(assigns(:course)).to be_a_new(Course)
+      end
+
+      it "render template" do
+        expect(response).to render_template("new")
+      end
     end
 
-    it "render template" do
-      course = build(:course) #產生一個未儲存的 course 對象
+    context "when user not login" do
+      it "redirect_to new_user_session_path" do
+        get :new
 
-      get :new
-
-      expect(response).to render_template("new")
+        expect(response).to redirect_to new_user_session_path
+      end
     end
+    
   end
 
   # create
