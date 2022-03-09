@@ -2,7 +2,7 @@ class CoursesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
 
   def index
-    @courses = Course.all
+    @courses = Course.includes(:user)
   end
 
   def show
@@ -14,8 +14,9 @@ class CoursesController < ApplicationController
   end
 
   def create
-    @course = Course.new(course_params)
-    @course.user = current_user #for rspec test
+    # @course = Course.new(course_params)
+    # @course.user = current_user #for rspec test
+    @course = current_user.courses.build(course_params)
     if @course.save
       redirect_to courses_path
     else
