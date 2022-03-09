@@ -1,28 +1,23 @@
-<div class="col-md-12">
-  <div class="course">
-    <%= link_to("New course", new_course_path , :class => "btn pull-right") %>
+<div class="container mt-3">
+  <div class="row">
+    <% @courses.each do |course| %>
+      <div class="col-4">
+        <div class="card-group mt-2">
+            <div class="card">
+              <div class="card-body">
+                  <h5 class="card-title">名稱: <%= link_to course.title, course_path(course) %></h5>
+                  <p class="card-text">敘述: <%= course.description %></p>
+                  <% if user_signed_in? && current_user.id == course.user_id %>
+                    <div class="d-flex justify-content-between">
+                      <%= link_to "刪除", course_path(course), method: 'delete', class: "btn btn-danger"%>
+                      <%= link_to "編輯", edit_course_path(course), class: "btn btn-primary"%>
+                    </div>
+                  <% end %>
+              </div>
+            </div>
+        </div>
+      </div>
+    <% end %>
   </div>
-  <table class="table">
-    <thead>
-      <tr>
-        <td> # </td>
-        <td> Title </td>
-        <td> Description </td>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @courses.each do |course| %>
-      <tr>
-        <td>#</td>
-        <td><%= link_to(course.title, course_path(course)) %></td>
-        <td><%= course.description %></td>
-        <td>
-          <%= link_to("Edit", edit_course_path(course), :class => "btn btn-xs") %>
-          <%= link_to("Delete", course_path(course), :class => "btn btn-xs", :method => :delete, :data => { :confirm => "Are you sure?" } ) %>
-       </td>
-     </tr>
-     <% end %>
-   </tbody>
- </table>
 </div>
+
